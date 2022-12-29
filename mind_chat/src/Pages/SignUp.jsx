@@ -12,6 +12,24 @@ const SignUp = () => {
     const displayName = e.target[0].value;
     const email = e.target[1].value;
     const password = e.target[2].value;
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        console.log(user);
+        updateProfile(auth.currentUser, {
+          displayName,
+        });
+        window.alert("회원가입이 완료 되었습니다.");
+        navigate("/login");
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      });
   };
   return (
     <div className="formContainer">
