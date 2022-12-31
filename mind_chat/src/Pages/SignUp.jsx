@@ -1,9 +1,9 @@
 import React from "react";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth } from "../firebase";
-import { ref, uploadBytesResumable } from "firebase/storage";
+import { auth, storage, db } from "../firebase";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
-
+import { doc, setDoc } from "firebase/firestore";
 const SignUp = () => {
   const navigate = useNavigate();
   //에러관리용 State설정해서 회원가입 에러시 문구 띄워줘야함.
@@ -13,14 +13,20 @@ const SignUp = () => {
     const email = e.target[1].value;
     const password = e.target[2].value;
 
-    createUserWithEmailAndPassword(auth, email, password)
+    const res = createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        console.log(user);
+        console.log();
         updateProfile(auth.currentUser, {
           displayName,
         });
+        setDoc(doc(db, "users", user.uid), {
+          uid: user.uid,
+          displayName,
+          email,
+        });
+
         window.alert("회원가입이 완료 되었습니다.");
         navigate("/login");
         // ...

@@ -1,5 +1,6 @@
 import Message from "./Message";
 import Input from "./Input";
+
 const Chat = () => {
   return (
     <div className="chat">

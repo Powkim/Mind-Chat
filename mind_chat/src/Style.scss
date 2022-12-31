@@ -144,10 +144,10 @@
       }
 
       .userChat {
-        padding: 10px;
         display: flex;
-        align-items: center;
-        gap: 10px;
+        flex-direction: column;
+        padding: 1rem;
+
         color: white;
         cursor: pointer;
 
