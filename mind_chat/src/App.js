@@ -4,6 +4,7 @@ import SignUp from "./Pages/SignUp";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./Style.scss";
 import { auth } from "./firebase";
+
 function App() {
   const user = auth.currentUser;
   // const LoginRoute = () => {
