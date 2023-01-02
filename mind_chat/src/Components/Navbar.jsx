@@ -23,9 +23,9 @@ const Navbar = () => {
 
   return (
     <div className="navbar">
-      <span className="logo">Jisoo chat</span>
+      <span className="logo">Mind Chat</span>
       <div className="user">
-        <img src={BasePhoto} alt=""></img>
+        <img src={user.photoURL} alt=""></img>
         <span>{displayName} </span>
         <button onClick={Logouthandle}>Logout</button>
       </div>

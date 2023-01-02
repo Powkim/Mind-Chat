@@ -12,107 +12,106 @@ import { query, where, onSnapshot } from "firebase/firestore";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { RoomNum, UserId } from "../atom";
+import { GroupOn, LastMsg, RoomNum, Select, UserOn } from "../atom";
 import { db, auth } from "../firebase";
+import GroupBtn from "./GroupBtn";
 
-const Chats = () => {
+const UserList = () => {
   const [User, SetUser] = useState([]);
   const [RoomId, SetRoomId] = useRecoilState(RoomNum);
-  const [Useruid, SetUseruid] = useRecoilState(UserId);
+  const [Selectuser, SetSelectuser] = useRecoilState(Select);
+  const [BtnOn, SetBtnOn] = useState(false);
+  const [chats, SetChats] = useState([]);
+  const [OnChat, SetOnChat] = useState([]);
+  const [UserClick, SetUserClick] = useRecoilState(UserOn);
   const q = getDocs(collection(db, "users"));
-  const arr = [];
+  const arr1 = [];
+  const arr2 = [];
   const currentUser = auth.currentUser;
+
   const BasePhoto =
     "https://user-images.githubusercontent.com/107850055/210062348-8d3c5b2d-5cc1-46f8-9302-02832691c9c1.png";
 
   const getUser = async () => {
     const query = await getDocs(collection(db, "users"));
+
     query.forEach((doc) => {
-      arr.push(doc.data());
-      SetUser(arr.slice(0, 4));
+      arr1.push(doc.data());
+      SetUser(arr1.slice(0, 4));
     });
   };
+  useEffect(() => {
+    const getChats = () => {
+      const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {
+        SetChats(doc.data());
+      });
+
+      return () => {
+        unsub();
+      };
+    };
+
+    currentUser.uid && getChats();
+  }, [currentUser.uid]);
+
+  //원래대로면 chat[0]했을때 나오는게 맞음.
+  // const getmsg = async () => {
+  //   const query = await getDocs(doc(db, "chats", Useruid));
+  //   console.log(query.data());
+  //   SetOnChat(arr2);
+  //   console.log(OnChat);
+  // };
 
   //위에 id값 가지고 map돌려서 id값 이용해서 디스플레이 네임 조회 해야함.
   useEffect(() => {
     getUser();
+    // getmsg();
   }, []);
+
   //유저 선택시 채팅방 만들기
-  const UserSelectHandle = async (user, uid) => {
+  const UserSelectHandle = async (uid) => {
     //check whether the group(chats in firestore) exists, if not create
+    // SetRoomId(Selectuser.uid > user.uid ? Useruid + user.uid : user.uid + Useruid);
+
+    SetUserClick(!UserClick);
     SetRoomId(
-      currentUser.uid > user.uid
-        ? currentUser.uid + user.uid
-        : user.uid + currentUser.uid
+      currentUser.uid > uid ? currentUser.uid + uid : uid + currentUser.uid
     );
-    SetUseruid(uid);
-    console.log(Useruid);
-    console.log(uid);
-    console.log(currentUser.uid > uid);
-    try {
-      const res = await getDoc(doc(db, "chats", RoomId));
-
-      if (!res.exists()) {
-        //create a chat in chats collection
-        await setDoc(doc(db, "chats", RoomId), { messages: [] });
-
-        //create user chats
-        await updateDoc(doc(db, "userChats", currentUser.uid), {
-          [RoomId + ".userInfo"]: {
-            uid: uid,
-            displayName: user.displayName,
-            photoURL: user.photoURL,
-          },
-          [RoomId + ".date"]: serverTimestamp(),
-        });
-
-        await updateDoc(doc(db, "userChats", uid), {
-          [RoomId + ".userInfo"]: {
-            uid: uid,
-            displayName: currentUser.displayName,
-            photoURL: currentUser.photoURL,
-          },
-          [RoomId + ".date"]: serverTimestamp(),
-        });
-      }
-    } catch (err) {}
+    console.log(RoomId);
+    // try {
+    //   const res = await getDoc(doc(db, "chats", RoomId));
+    // } catch (err) {}
   };
-  //채팅방 클릭시 채팅방 번호 뜨도록 구현하고 데이터 띄울것.
 
-  // useEffect(() => {
-  //   UserList.map(async (items) => {
-  //     const docRef = doc(db, "users", "GX9K5Gx5VLTiRfeSjL6730Psxhc2");
-  //     const docSnap = await getDoc(docRef);
-  //     //이거 위에처럼 배열에 담아줄것.
+  const arr = "";
+  // const CheckedHandle = (uid) => {
+  //   SetBtnOn(!BtnOn);
 
-  //     SetUser(
-  //       docSnap.data().map((itmes) => ({
-  //         displayName: items.displayName,
-  //         id: docSnap.data().uid,
-  //       }))
-  //     );
-  //   });
-  // }, []);
+  //   if (BtnOn) {
+  //     arr = uid;
+  //   }
+  // };
 
   return (
-    <div className="chats">
-      {User.map((items) => {
-        return (
+    <>
+      <div className="chats">
+        {Object.entries(chats)?.map((chat) => (
           <div
             className="userChat"
+            key={chat[0]}
             onClick={() => {
-              UserSelectHandle(items, items.uid);
+              UserSelectHandle(chat[1].userInfo.uid);
             }}
           >
-            <img src={BasePhoto} alt="" />
-            <div className="userChatInfo" key={items.id}>
-              <span>{items.displayName}</span>
-              <p>{items.displayName}</p>
+            <div className="userChatInfo">
+              <img src={chat[1].userInfo.photoURL} alt="" />
+              <span>{chat[1].userInfo.displayName}</span>
+              <p>{chat[1].lastMessage?.text}</p>
             </div>
           </div>
-        );
-      })}
-    </div>
+        ))}
+      </div>
+    </>
   );
 };
-export default Chats;
+export default UserList;
