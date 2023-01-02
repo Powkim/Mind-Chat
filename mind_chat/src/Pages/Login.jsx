@@ -1,25 +1,17 @@
 import React from "react";
 import { auth } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const Login = () => {
   const navigate = useNavigate();
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const email = e.target[0].value;
     const password = e.target[1].value;
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        console.log(user);
-        navigate("/");
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-      });
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate("/");
+    } catch (err) {}
   };
   return (
     <div className="formContainer">
@@ -32,7 +24,9 @@ const Login = () => {
 
           <button>로그인하기</button>
         </form>
-        <p>You don't have an account? Register</p>
+        <p>
+          <Link to="/signup">You don't have an account ? Sign Up</Link>
+        </p>
       </div>
     </div>
   );
