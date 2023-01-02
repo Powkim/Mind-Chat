@@ -5,7 +5,29 @@ export const RoomNum = atom({
   default: "",
 });
 
-export const UserId = atom({
-  key: "UserId",
+export const Select = atom({
+  key: "Select",
   default: "",
+});
+//그룹버튼 ON
+export const GroupOn = atom({
+  key: "GroupOn",
+  default: false,
+});
+//그룹 생성
+export const GroupCreate = atom({
+  key: "GroupCreate",
+  default: false,
+});
+export const GroupChatList = atom({
+  key: "GroupChatList",
+  default: false,
+});
+export const GroupRoomNum = atom({
+  key: "GroupRoomNum",
+  default: "",
+});
+export const UserOn = atom({
+  key: "UserOn",
+  default: false,
 });
