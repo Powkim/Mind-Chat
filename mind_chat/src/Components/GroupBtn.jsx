@@ -17,7 +17,7 @@ const GroupBtn = ({ GroupChathandle }) => {
   const [TitleId, SetTitleId] = useRecoilState(Menuclick);
   const navigate = useNavigate();
   const Btnhandle = () => {
-    SetBtnOn(!BtnOn);
+    SetBtnOn(true);
 
     // navigate("/group");
   };
@@ -27,6 +27,7 @@ const GroupBtn = ({ GroupChathandle }) => {
     SetTitleId(3);
     SetOn(true);
   };
+  SetBtnOn(false);
   // useEffect(() => {
   //   SetBtnOn(false);
   // }, []);

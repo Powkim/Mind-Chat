@@ -37,5 +37,5 @@ export const UserOn = atom({
 });
 export const Menuclick = atom({
   key: "Menuclick",
-  default: false,
+  default: 1,
 });
