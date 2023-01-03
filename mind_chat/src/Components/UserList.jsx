@@ -125,13 +125,11 @@ const UserList = () => {
     SetBtnOn(newChecked);
     SetGRoomId(BtnOn.sort().join(""));
     SetUserName(newName);
-    console.log(newName);
-    console.log(UserName);
   };
   useEffect(() => {
     getUser();
   }, []);
-  SetGroup(false);
+
   return (
     <>
       <div className="chats">

@@ -18,21 +18,25 @@ const GroupBtn = ({ GroupChathandle }) => {
   const [TitleId, SetTitleId] = useRecoilState(Menuclick);
   const navigate = useNavigate();
   const Btnhandle = () => {
-    SetBtnOn(true);
+    SetBtnOn(!BtnOn);
 
     // navigate("/group");
   };
   const Createhandle = (GRoomId, UserName) => {
     GroupChathandle(GRoomId, UserName);
-    navigate("/group");
+    navigate("/group/messages");
     SetTitleId(3);
-    SetOn(true);
+    SetOn(!BtnOn);
   };
   // SetBtnOn(false);
   // useEffect(() => {
   //   SetBtnOn(false);
   // }, []);
-  console.log(BtnOn);
+  useEffect(() => {
+    if (BtnOn) {
+      SetBtnOn(false);
+    }
+  }, []);
   return (
     <>
       <div className="BtnWrap">
