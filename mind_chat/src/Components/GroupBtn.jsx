@@ -12,6 +12,7 @@ import {
 const GroupBtn = ({ GroupChathandle }) => {
   const [GRoomId, SetGRoomId] = useRecoilState(GroupRoomNum);
   const [UserName, SetUserName] = useRecoilState(GroupUserName);
+  //그룹채팅 + 버튼 클릭 여부
   const [BtnOn, SetBtnOn] = useRecoilState(GroupOn);
   const [On, SetOn] = useRecoilState(GroupCreate);
   const [TitleId, SetTitleId] = useRecoilState(Menuclick);
@@ -27,10 +28,11 @@ const GroupBtn = ({ GroupChathandle }) => {
     SetTitleId(3);
     SetOn(true);
   };
-  SetBtnOn(false);
+  // SetBtnOn(false);
   // useEffect(() => {
   //   SetBtnOn(false);
   // }, []);
+  console.log(BtnOn);
   return (
     <>
       <div className="BtnWrap">
