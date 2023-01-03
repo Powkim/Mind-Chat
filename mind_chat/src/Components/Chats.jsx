@@ -51,16 +51,8 @@ const UserList = () => {
       };
     };
 
-    currentUser.uid && getChats();
-  }, [currentUser.uid]);
-
-  //원래대로면 chat[0]했을때 나오는게 맞음.
-  // const getmsg = async () => {
-  //   const query = await getDocs(doc(db, "chats", Useruid));
-  //   console.log(query.data());
-  //   SetOnChat(arr2);
-  //   console.log(OnChat);
-  // };
+    getChats();
+  }, []);
 
   //위에 id값 가지고 map돌려서 id값 이용해서 디스플레이 네임 조회 해야함.
   useEffect(() => {
@@ -70,27 +62,12 @@ const UserList = () => {
 
   //유저 선택시 채팅방 만들기
   const UserSelectHandle = async (uid) => {
-    //check whether the group(chats in firestore) exists, if not create
-    // SetRoomId(Selectuser.uid > user.uid ? Useruid + user.uid : user.uid + Useruid);
-
     SetUserClick(!UserClick);
     SetRoomId(
       currentUser.uid > uid ? currentUser.uid + uid : uid + currentUser.uid
     );
     console.log(RoomId);
-    // try {
-    //   const res = await getDoc(doc(db, "chats", RoomId));
-    // } catch (err) {}
   };
-
-  const arr = "";
-  // const CheckedHandle = (uid) => {
-  //   SetBtnOn(!BtnOn);
-
-  //   if (BtnOn) {
-  //     arr = uid;
-  //   }
-  // };
 
   return (
     <>
@@ -105,8 +82,11 @@ const UserList = () => {
           >
             <div className="userChatInfo">
               <img src={chat[1].userInfo.photoURL} alt="" />
-              <span>{chat[1].userInfo.displayName}</span>
-              <p>{chat[1].lastMessage?.text}</p>
+              <div>
+                {" "}
+                <span>{chat[1].userInfo.displayName}</span>
+                <p>{chat[1].lastMessage?.text}</p>
+              </div>
             </div>
           </div>
         ))}

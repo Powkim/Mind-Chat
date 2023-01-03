@@ -17,7 +17,7 @@ import {
   GroupCreate,
   GroupOn,
   GroupRoomNum,
-  LastMsg,
+  GroupUserName,
   RoomNum,
   Select,
   UserOn,
@@ -34,28 +34,21 @@ const UserList = () => {
   const [Group, SetGroup] = useRecoilState(GroupOn);
   const q = getDocs(collection(db, "users"));
   const [GRoomId, SetGRoomId] = useRecoilState(GroupRoomNum);
-  const [list, SetList] = useRecoilState(GroupChatList);
+  const [UserName, SetUserName] = useRecoilState(GroupUserName);
   //그룹챗 생성 여부 확인용
   const [On, SetOn] = useRecoilState(GroupCreate);
-  const arr1 = [];
-  let arr2 = [];
   const currentUser = auth.currentUser;
-  let GroupArr = [];
+
   const getUser = async () => {
     const query = await getDocs(collection(db, "users"));
+    const arr = [];
     query.forEach((doc) => {
-      arr1.push(doc.data());
-      SetUser(arr1.slice(0, 4));
-      console.log(doc.data());
+      arr.push(doc.data());
+      SetUser(arr);
     });
   };
 
   //위에 id값 가지고 map돌려서 id값 이용해서 디스플레이 네임 조회 해야함.
-  useEffect(() => {
-    getUser();
-
-    // getmsg();
-  }, []);
 
   //유저 선택시 채팅방 만들기
   const UserSelectHandle = async (Selectuser) => {
@@ -69,7 +62,6 @@ const UserList = () => {
     SetUserClick(!UserClick);
 
     const res = await getDoc(doc(db, "chats", RoomId));
-    const query = await getDoc(doc(db, "userChats", SelectUser.uid));
     try {
       if (!res.exists()) {
         //create a chat in chats collection
@@ -97,12 +89,9 @@ const UserList = () => {
         //create user chats
       }
     } catch (err) {}
-    try {
-    } catch (err) {}
   };
   //그룹채팅방생성
-  const GroupChathandle = async (GRoomId) => {
-    console.log(UserClick);
+  const GroupChathandle = async (GRoomId, displayName) => {
     const res = await getDoc(doc(db, "GroupChat", GRoomId));
     // const query = await getDoc(doc(db, "userChats", SelectUser.uid));
     try {
@@ -111,51 +100,35 @@ const UserList = () => {
         await setDoc(doc(db, "GroupChat", GRoomId), {
           messages: [],
           userlist: BtnOn,
+          displayName: displayName,
         });
-        // await updateDoc(doc(db, "GroupuserChats", currentUser.uid), {
-        //   [RoomId + ".userInfo"]: {
-        //     uid: SelectUser.uid,
-        //     displayName: SelectUser.displayName,
-        //     photoURL: SelectUser.photoURL,
-        //   },
-        //   [RoomId + ".date"]: serverTimestamp(),
-        // });
-
-        // await updateDoc(doc(db, "userChats", SelectUser.uid), {
-        //   [RoomId + ".userInfo"]: {
-        //     uid: currentUser.uid,
-        //     displayName: currentUser.displayName,
-        //     photoURL: currentUser.photoURL,
-        //   },
-        //   [RoomId + ".date"]: serverTimestamp(),
-        // });
       }
     } catch (err) {}
   };
 
   //1번. 그룹쳇 전체 문서를 부르고 거기에 내 유저 아이디가 있으면 그거만 필터로 걸러서 가져오기.
-  const CheckedHandle = (uid) => {
+  const CheckedHandle = (uid, displayName) => {
     //uid를 추가해야 하는경우
     //체크가 되어있고 배열에 없어야함
     //만약 체크를 해제하면 배열에서 빼야함.
     const currentIdx = BtnOn.indexOf(uid);
     const newChecked = [...BtnOn];
+    const newName = [...UserName];
     if (currentIdx === -1) {
       newChecked.push(uid);
+      newName.push(displayName);
     } else {
       newChecked.splice(currentIdx, 1);
+      newName.splice(currentIdx, 1);
     }
     SetBtnOn(newChecked);
     SetGRoomId(BtnOn.sort().join(""));
-    //   SetBtnOn(!BtnOn);
-    //   console.log(uid);
-    //   console.log(BtnOn);
-    //   if (BtnOn) {
-    //     arr = uid;
-    //   }
+    SetUserName(newName);
   };
+  useEffect(() => {
+    getUser();
+  }, []);
 
-  console.log(BtnOn);
   return (
     <>
       <div className="chats">
@@ -166,11 +139,10 @@ const UserList = () => {
                 <input
                   type="checkbox"
                   onClick={() => {
-                    CheckedHandle(items.uid);
+                    CheckedHandle(items.uid, items.displayName);
                   }}
                 ></input>
               ) : null}
-
               <div
                 className="userChatInfo"
                 key={items.uid}

@@ -2,6 +2,7 @@ import { doc, getDoc, onSnapshot } from "firebase/firestore";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { RoomNum, UserOn } from "../atom";
 import { auth, db } from "../firebase";
@@ -13,6 +14,7 @@ const Messages = () => {
   const [RoomId, SetRoomId] = useRecoilState(RoomNum);
   const [UserClick, SetUserClick] = useRecoilState(UserOn);
   const user = auth.currentUser;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getmessage = async () => {
@@ -29,6 +31,7 @@ const Messages = () => {
   console.log(RoomId);
   const Back = () => {
     SetUserClick(false);
+    navigate(-1);
   };
 
   // useEffect(() => {

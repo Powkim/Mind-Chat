@@ -87,7 +87,6 @@ a:visited {
     border: 1px solid white;
     border-radius: 10px;
     width: 20%;
-
     background-color: #e7edff;
     display: flex;
 
@@ -196,23 +195,32 @@ a:visited {
       .menuContainer {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
         padding: 0.5rem;
+        gap: 1rem;
+
+        .yellow {
+          background-color: #ffe6e0;
+        }
         .userlist {
-          width: 65px;
+          width: 60px;
           display: flex;
           justify-content: center;
           padding: 0.5rem;
           box-shadow: 1px 1px 2px 1px;
-          font-size: 1.2rem;
           border-radius: 0.5rem;
 
+          > div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
+          img {
+            width: 25px;
+          }
           a {
             color: black;
           }
-        }
-        .yellow {
-          background-color: yellow;
         }
       }
       .navbar {
@@ -268,57 +276,78 @@ a:visited {
         }
       }
       .chats {
+        height: 350px;
         display: flex;
         flex-direction: column;
-        margin-top: 0.5rem;
         gap: 1rem;
-        height: 350px;
+        overflow-y: scroll;
+        padding-top: 0.5rem;
       }
-
+      .chats::-webkit-scrollbar {
+        width: 10px;
+      }
+      .chats::-webkit-scrollbar-thumb {
+        background-color: rgb(137, 136, 136);
+        border-radius: 20px;
+      }
+      .chats::-webkit-scrollbar-track {
+        background-color: rgb(173, 173, 173);
+        border-radius: 20px;
+      }
       .GroupBtn {
         width: 60px;
-        height: 60px;
+        height: 62px;
+        padding: 0.7rem;
         position: absolute;
-        right: 0;
-        bottom: 120px;
+        right: 25px;
+        bottom: 80px;
         color: #000;
         background-color: #fff;
         border-radius: 50%;
         border: none;
       }
       .CancleBtn {
+        position: absolute;
+        bottom: 80px;
+        left: 15px;
         padding: 0.5rem;
-        background-color: #fff;
+        background-color: none;
         text-align: left;
+        cursor: pointer;
       }
       .userChat {
         width: 100%;
         display: flex;
         color: gray;
-
         cursor: pointer;
         &:hover {
-          background-color: #2f2d52;
+          background-color: #ffffff;
         }
         img {
           width: 50px;
           height: 50px;
           border-radius: 50%;
           object-fit: cover;
+          margin-left: 1rem;
+          margin-right: 1rem;
         }
 
         .userChatInfo {
           display: flex;
+          flex-direction: row;
           align-items: center;
-          margin-left: 2rem;
+          justify-content: center;
+          .GroupUser {
+            font-size: 15px;
+            font-weight: 500;
+          }
           span {
             font-size: 18px;
-            font-weight: 500;
-            margin-left: 1rem;
           }
           p {
+            margin: 0rem;
             font-size: 14px;
-            color: lightgray;
+            color: rgb(125, 125, 125);
           }
         }
       }

@@ -1,60 +1,44 @@
 import React from "react";
-import Navbar from "./Navbar";
-import Menu from "./Menu";
 import { GroupCreate, GroupRoomNum } from "../atom";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { collection, doc, getDocs, onSnapshot } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import { useEffect } from "react";
 
 const GroupChat = () => {
-  const [User, SetUser] = useState([]);
   const [RoomId, SetRoomId] = useRecoilState(GroupRoomNum);
   const [chats, SetChats] = useState([]);
-  const [OnChat, SetOnChat] = useState([]);
   const [On, SetOn] = useRecoilState(GroupCreate);
-  const q = getDocs(collection(db, "users"));
-  const arr = [];
 
   const currentUser = auth.currentUser;
   const UserSelectHandle = async (roomid) => {
-    //check whether the group(chats in firestore) exists, if not create
-    // SetRoomId(Selectuser.uid > user.uid ? Useruid + user.uid : user.uid + Useruid);
-    //   const res = await getDoc(doc(db, "chats", RoomId));
-    // } catch (err) {}
     SetOn(true);
-    //roomid담아서 메시지로 전송?
     SetRoomId(roomid);
   };
 
   const GroupList = async () => {
     const query = await getDocs(collection(db, "GroupChat"));
+    const arr = [];
+    const arr2 = [];
     query.forEach((doc) => {
       arr.push(doc.data());
-      SetChats(arr);
+    });
+
+    arr.map((items) => {
+      //디스플레이 네임에 내 이름이 있는지 확인
+      //있다면 배열에 추가해준뒤 채팅에 담기.
+      if (items.displayName.includes(currentUser.displayName)) {
+        arr2.push(items);
+        SetChats(arr2);
+      }
     });
   };
-  console.log(chats);
-  // useEffect(() => {
-  //   const getChats = () => {
-  //     const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {
-  //       SetChats(doc.data());
-  //     });
-
-  //     return () => {
-  //       unsub();
-  //     };
-  //   };
-
-  //   currentUser.uid && getChats();
-  // }, [currentUser.uid]);
 
   useEffect(() => {
     GroupList();
-    // getmsg();
   }, []);
-  console.log(chats);
+
   return (
     <>
       <div className="chats">
@@ -65,9 +49,15 @@ const GroupChat = () => {
             onClick={() => UserSelectHandle(chat.messages[0].RoomId)}
           >
             <div className="userChatInfo">
-              <img src={chat[1]} alt="" />
-              <span>{chat[1]}채팅임</span>
-              <p>{chat[1]}채팅임</p>
+              <img
+                src="https://user-images.githubusercontent.com/107850055/210293034-895ff441-3c8d-48ad-9db2-5d465090d0f6.jpg"
+                alt=""
+              />
+
+              <div>
+                <span className="GroupUser"> {chat.displayName} </span>
+                <p>{chat.lastMsg ? chat.lastMsg[0].lastMsg : ""}</p>
+              </div>
             </div>
           </div>
         ))}

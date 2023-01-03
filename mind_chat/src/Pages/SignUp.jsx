@@ -41,7 +41,7 @@ const SignUp = () => {
             //create empty user chats on firestore
             await setDoc(doc(db, "userChats", res.user.uid), {});
             await setDoc(doc(db, "GroupuserChats", res.user.uid), {});
-            navigate("/");
+            navigate("/login");
           } catch (err) {
             console.log(err);
           }

@@ -27,7 +27,15 @@ export const GroupRoomNum = atom({
   key: "GroupRoomNum",
   default: "",
 });
+export const GroupUserName = atom({
+  key: "GroupUserName",
+  default: [],
+});
 export const UserOn = atom({
   key: "UserOn",
+  default: false,
+});
+export const Menuclick = atom({
+  key: "Menuclick",
   default: false,
 });

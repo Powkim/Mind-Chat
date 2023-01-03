@@ -6,15 +6,14 @@ import "./Style.scss";
 import { auth } from "./firebase";
 import Individual from "./Pages/Individual";
 import Group from "./Pages/Group";
+import { useEffect, useState } from "react";
 
 function App() {
-  const user = auth.currentUser;
-  // const LoginRoute = () => {
-  //   if (!user) {
-  //     return <Navigate to="/login" />;
-  //   }
-  // };
-  console.log(user);
+  const [User, SetUser] = useState([]);
+  useEffect(() => {
+    SetUser(auth.currentUser);
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>

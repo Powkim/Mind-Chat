@@ -2,6 +2,7 @@ import { doc, getDoc, onSnapshot } from "firebase/firestore";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { GroupCreate, GroupRoomNum, RoomNum, UserOn } from "../atom";
 import { auth, db } from "../firebase";
@@ -14,7 +15,7 @@ const GroupMessages = () => {
   const [UserClick, SetUserClick] = useRecoilState(UserOn);
   const [On, SetOn] = useRecoilState(GroupCreate);
   const user = auth.currentUser;
-
+  const navigate = useNavigate();
   useEffect(() => {
     const getmessage = async () => {
       // const docRef = doc(db, "chats", RoomId);
@@ -31,6 +32,7 @@ const GroupMessages = () => {
   console.log(messages);
   const Back = () => {
     SetOn(false);
+    navigate(-1);
   };
 
   // useEffect(() => {

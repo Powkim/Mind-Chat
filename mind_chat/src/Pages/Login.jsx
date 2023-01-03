@@ -11,7 +11,9 @@ const Login = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       navigate("/");
-    } catch (err) {}
+    } catch (err) {
+      window.alert(err);
+    }
   };
   return (
     <div className="formContainer">

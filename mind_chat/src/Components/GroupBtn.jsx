@@ -1,27 +1,35 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { GroupCreate, GroupOn, GroupRoomNum } from "../atom";
+import {
+  GroupCreate,
+  GroupOn,
+  GroupRoomNum,
+  GroupUserName,
+  Menuclick,
+} from "../atom";
+
 const GroupBtn = ({ GroupChathandle }) => {
   const [GRoomId, SetGRoomId] = useRecoilState(GroupRoomNum);
-
+  const [UserName, SetUserName] = useRecoilState(GroupUserName);
   const [BtnOn, SetBtnOn] = useRecoilState(GroupOn);
   const [On, SetOn] = useRecoilState(GroupCreate);
+  const [TitleId, SetTitleId] = useRecoilState(Menuclick);
   const navigate = useNavigate();
   const Btnhandle = () => {
     SetBtnOn(!BtnOn);
 
     // navigate("/group");
   };
-  const Createhandle = (GRoomId) => {
-    GroupChathandle(GRoomId);
-    // navigate("/group");
-    SetOn(!On);
+  const Createhandle = (GRoomId, UserName) => {
+    GroupChathandle(GRoomId, UserName);
     navigate("/group");
+    SetTitleId(3);
+    SetOn(true);
   };
-  useEffect(() => {
-    SetBtnOn(false);
-  }, []);
+  // useEffect(() => {
+  //   SetBtnOn(false);
+  // }, []);
   return (
     <>
       <div className="BtnWrap">
@@ -29,7 +37,7 @@ const GroupBtn = ({ GroupChathandle }) => {
           <button
             className="GroupBtn"
             onClick={() => {
-              Createhandle(GRoomId);
+              Createhandle(GRoomId, UserName);
             }}
           >
             채팅하기

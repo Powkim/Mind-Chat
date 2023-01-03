@@ -29,6 +29,10 @@ const GroupInput = () => {
         senderId: currentUser.uid,
         date: Timestamp.now(),
         RoomId: ChatId,
+        lastMsg: text,
+      }),
+      lastMsg: arrayUnion({
+        lastMsg: text,
       }),
     });
 
