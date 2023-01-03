@@ -16,16 +16,26 @@ const GroupMessages = () => {
   const [On, SetOn] = useRecoilState(GroupCreate);
   const user = auth.currentUser;
   const navigate = useNavigate();
+  // useEffect(() => {
+
+  //     // const docRef = doc(db, "chats", RoomId);
+  //     // const docSnap = await getDoc(docRef.data().json());
+  //     const res = onSnapshot(doc(db, "GroupChat", RoomId));
+  //     setMessages(res.data().messages);
+  //     console.log(res);
+
+  //   return () => {
+  //     res();
+  //   };
+  // }, [RoomId]);
   useEffect(() => {
-    const getmessage = async () => {
-      // const docRef = doc(db, "chats", RoomId);
-      // const docSnap = await getDoc(docRef.data().json());
-      const res = await getDoc(doc(db, "GroupChat", RoomId));
-      setMessages(res.data().messages);
-      console.log(res);
-    };
+    // const docRef = doc(db, "chats", RoomId);
+    // const docSnap = await getDoc(docRef.data().json());
+    const res = onSnapshot(doc(db, "GroupChat", RoomId), (doc) => {
+      setMessages(doc.data().messages);
+    });
     return () => {
-      getmessage();
+      res();
     };
   }, [RoomId]);
 

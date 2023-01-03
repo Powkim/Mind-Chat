@@ -17,14 +17,13 @@ const Messages = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const getmessage = async () => {
-      // const docRef = doc(db, "chats", RoomId);
-      // const docSnap = await getDoc(docRef.data().json());
-      const res = await getDoc(doc(db, "chats", RoomId));
-      setMessages(res.data().messages);
-    };
+    // const docRef = doc(db, "chats", RoomId);
+    // const docSnap = await getDoc(docRef.data().json());
+    const res = onSnapshot(doc(db, "chats", RoomId), (doc) => {
+      doc.exists() && setMessages(doc.data().messages);
+    });
     return () => {
-      getmessage();
+      res();
     };
   }, [RoomId]);
   console.log(messages);

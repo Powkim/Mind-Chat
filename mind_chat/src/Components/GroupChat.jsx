@@ -38,7 +38,7 @@ const GroupChat = () => {
   useEffect(() => {
     GroupList();
   }, []);
-
+  console.log(RoomId);
   return (
     <>
       <div className="chats">

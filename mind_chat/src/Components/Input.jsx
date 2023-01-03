@@ -1,15 +1,6 @@
 import { React, useState } from "react";
-import {
-  arrayUnion,
-  doc,
-  serverTimestamp,
-  Timestamp,
-  updateDoc,
-  addDoc,
-  setDoc,
-} from "firebase/firestore";
-
-import { db, storage } from "../firebase";
+import { arrayUnion, doc, Timestamp, updateDoc } from "firebase/firestore";
+import { db } from "../firebase";
 import { auth } from "../firebase";
 import { v4 as uuid } from "uuid";
 import { RoomNum, Select } from "../atom";
@@ -33,33 +24,8 @@ const Input = () => {
         date: Timestamp.now(),
         RoomId: ChatId,
       }),
+      lastMsg: text,
     });
-
-    await updateDoc(doc(db, "userChats", currentUser.uid), {
-      [ChatId + ".lastMessage"]: {
-        text,
-      },
-      [ChatId + ".userInfo"]: {
-        uid: Selectuser.uid,
-        displayName: Selectuser.displayName,
-        photoURL: Selectuser.photoURL,
-      },
-      [ChatId + ".date"]: serverTimestamp(),
-    });
-
-    await updateDoc(doc(db, "userChats", Selectuser.uid), {
-      [ChatId + ".lastMessage"]: {
-        text,
-      },
-
-      [ChatId + ".date"]: serverTimestamp(),
-    });
-
-    // setDoc(doc(db, "LastChat", ChatId), {
-    //   text,
-    //   ChatId,
-    // });
-    // SetLastMsg({ text, Useruid });
   };
 
   return (
@@ -70,16 +36,6 @@ const Input = () => {
         value={text}
       />
       <div className="send">
-        <img src="" alt="" />
-        {/* <input
-          type="file"
-          style={{ display: "none" }}
-          id="file"
-          onChange={(e) => SetImg(e.target.files[0])}
-        /> */}
-        {/* <label htmlFor="file">
-          <img src="" alt="" />
-        </label> */}
         <button onClick={handleSend}>Send</button>
       </div>
     </div>

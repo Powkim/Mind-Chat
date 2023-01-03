@@ -67,7 +67,8 @@ const UserList = () => {
         //create a chat in chats collection
         await setDoc(doc(db, "chats", RoomId), {
           messages: [],
-          userList: BtnOn,
+          userList: Selectuser,
+          lastMsg: "",
         });
         await updateDoc(doc(db, "userChats", currentUser.uid), {
           [RoomId + ".userInfo"]: {
