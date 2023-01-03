@@ -15,7 +15,7 @@ const Message = ({ message }) => {
   }, [message]);
   console.log(message);
   return (
-    <>
+    <div className="messageWrap">
       {message.map((items) => {
         return (
           <div
@@ -36,7 +36,7 @@ const Message = ({ message }) => {
           </div>
         );
       })}
-    </>
+    </div>
   );
 };
 
