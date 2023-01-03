@@ -15,7 +15,7 @@ const GroupMessage = ({ messages }) => {
   }, [messages]);
 
   return (
-    <>
+    <div className="messageWrap">
       {messages.map((items) => {
         return (
           <div
@@ -36,7 +36,7 @@ const GroupMessage = ({ messages }) => {
           </div>
         );
       })}
-    </>
+    </div>
   );
 };
 
