@@ -15,7 +15,7 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <Navbar />
-      {UserClick ? <Messages /> : <UserList />}
+      <UserList />
       <Menu />
     </div>
   );

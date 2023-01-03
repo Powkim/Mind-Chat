@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { Menuclick } from "../atom";
 
@@ -26,7 +26,7 @@ const Menu = () => {
     {
       id: 3,
       name: "그룹",
-      path: "/Group",
+      path: "/group",
       photoURL:
         "https://user-images.githubusercontent.com/107850055/210294415-e16ff5c7-3acb-43f9-b90f-41bb5a2cc989.png",
     },
@@ -38,28 +38,22 @@ const Menu = () => {
       SetTitleId(id);
     }
   };
-  useEffect(() => {
-    if (TitleId === 3) {
-      navigate("/group");
-    } else if (TitleId === 2) {
-      navigate("/individual");
-    } else if (TitleId === 1) {
-      navigate("/");
-    }
-  }, [TitleId]);
+
   return (
     <>
       <div className="menuContainer">
         {menulist.map((items) => {
           return (
-            <div
-              className={`userlist ${items.id === TitleId && "yellow"}`}
-              key={items.id}
-              onClick={() => filterOn(items.id)}
-            >
-              <img src={items.photoURL} alt=""></img>
-              <span>{items.name}</span>
-            </div>
+            <Link to={items.path}>
+              <div
+                className={`userlist ${items.id === TitleId && "yellow"}`}
+                key={items.id}
+                onClick={() => filterOn(items.id)}
+              >
+                <img src={items.photoURL} alt=""></img>
+                <span>{items.name}</span>
+              </div>
+            </Link>
           );
         })}
       </div>

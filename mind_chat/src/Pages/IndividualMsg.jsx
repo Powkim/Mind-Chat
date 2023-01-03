@@ -4,21 +4,18 @@ import Chats from "../Components/Chats";
 import Menu from "../Components/Menu";
 import Messages from "../Components/Messages";
 import Navbar from "../Components/Navbar";
-import Sidebar from "../Components/Sidebar";
-import UserList from "../Components/UserList";
 
-const Individual = () => {
-  const [UserClick, SetUserClick] = useRecoilState(UserOn);
+const IndividualMsg = () => {
   return (
     <div className="home">
       <div className="container">
         <div className="sidebar">
           <Navbar />
-          <Chats />
+          <Messages />
           <Menu />
         </div>
       </div>
     </div>
   );
 };
-export default Individual;
+export default IndividualMsg;

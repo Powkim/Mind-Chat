@@ -7,6 +7,8 @@ import { auth } from "./firebase";
 import Individual from "./Pages/Individual";
 import Group from "./Pages/Group";
 import { useEffect, useState } from "react";
+import IndividualMsg from "./Pages/IndividualMsg";
+import GroupMsg from "./Pages/GroupMsg";
 
 function App() {
   const [User, SetUser] = useState([]);
@@ -18,10 +20,14 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/individual" element={<Individual />} />
-        <Route path="/group" element={<Group />} />
         <Route path="/login" element={<Login />} />
+
         <Route path="/signup" element={<SignUp />} />
+
+        <Route path="/individual" element={<Individual />} />
+        <Route path="/individual/messages" element={<IndividualMsg />} />
+        <Route path="/group" element={<Group />} />
+        <Route path="/group/messages" element={<GroupMsg />} />
       </Routes>
     </BrowserRouter>
   );

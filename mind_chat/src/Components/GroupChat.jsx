@@ -5,16 +5,18 @@ import { useRecoilState } from "recoil";
 import { collection, getDocs } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const GroupChat = () => {
   const [RoomId, SetRoomId] = useRecoilState(GroupRoomNum);
   const [chats, SetChats] = useState([]);
   const [On, SetOn] = useRecoilState(GroupCreate);
-
+  const navigate = useNavigate();
   const currentUser = auth.currentUser;
   const UserSelectHandle = async (roomid) => {
     SetOn(true);
     SetRoomId(roomid);
+    navigate("/group/messages");
   };
 
   const GroupList = async () => {
@@ -38,7 +40,7 @@ const GroupChat = () => {
   useEffect(() => {
     GroupList();
   }, []);
-  console.log(RoomId);
+
   return (
     <>
       <div className="chats">
@@ -46,7 +48,7 @@ const GroupChat = () => {
           <div
             className="userChat"
             key={chat[0]}
-            onClick={() => UserSelectHandle(chat.messages[0].RoomId)}
+            onClick={() => UserSelectHandle(chat.messages[1].RoomId)}
           >
             <div className="userChatInfo">
               <img

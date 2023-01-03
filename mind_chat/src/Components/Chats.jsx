@@ -2,6 +2,7 @@ import { getDocs, collection } from "firebase/firestore";
 
 import { useEffect } from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { RoomNum, Select, UserOn } from "../atom";
 import { db, auth } from "../firebase";
@@ -12,6 +13,7 @@ const UserList = () => {
   const [chats, SetChats] = useState([]);
   const [OnChat, SetOnChat] = useState([]);
   const [UserClick, SetUserClick] = useRecoilState(UserOn);
+  const navigate = useNavigate();
   const q = getDocs(collection(db, "users"));
   const currentUser = auth.currentUser;
   const BasePhoto =
@@ -41,11 +43,12 @@ const UserList = () => {
   }, []);
 
   //유저 선택시 채팅방 만들기
-  const UserSelectHandle = async (uid) => {
-    SetUserClick(!UserClick);
+  const UserSelectHandle = (uid) => {
+    SetUserClick();
     SetRoomId(
       currentUser.uid > uid ? currentUser.uid + uid : uid + currentUser.uid
     );
+    navigate("/individual/messages");
   };
 
   return (
