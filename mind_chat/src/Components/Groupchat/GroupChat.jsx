@@ -1,9 +1,9 @@
 import React from "react";
-import { GroupCreate, GroupRoomNum } from "../atom";
+import { GroupCreate, GroupRoomNum } from "../../atom";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { collection, getDocs } from "firebase/firestore";
-import { auth, db } from "../firebase";
+import { auth, db } from "../../firebase";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { Menuclick } from "../atom";
+import { Menuclick } from "../../atom";
 
 const Menu = () => {
   const [TitleId, SetTitleId] = useRecoilState(Menuclick);

@@ -1,9 +1,6 @@
-import { useRecoilState } from "recoil";
-import { UserOn } from "../atom";
-import Chats from "../Components/Chats";
-import Menu from "../Components/Menu";
-import Messages from "../Components/Messages";
-import Navbar from "../Components/Navbar";
+import Menu from "../Components/Common/Menu";
+import Messages from "../Components/PersonalChat/Messages";
+import Navbar from "../Components/Common/Navbar";
 
 const IndividualMsg = () => {
   return (

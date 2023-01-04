@@ -9,10 +9,9 @@ import {
   setDoc,
 } from "firebase/firestore";
 
-import { db, storage } from "../firebase";
-import { auth } from "../firebase";
+import { db, auth } from "../../firebase";
 import { v4 as uuid } from "uuid";
-import { GroupRoomNum, Select } from "../atom";
+import { GroupRoomNum, Select } from "../../atom";
 import { useRecoilState } from "recoil";
 
 const GroupInput = () => {

@@ -8,12 +8,10 @@ import {
   updateDoc,
   serverTimestamp,
 } from "firebase/firestore";
-import { query, where, onSnapshot } from "firebase/firestore";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
 import {
-  GroupChatList,
   GroupCreate,
   GroupOn,
   GroupRoomNum,
@@ -21,9 +19,9 @@ import {
   RoomNum,
   Select,
   UserOn,
-} from "../atom";
-import { db, auth } from "../firebase";
-import GroupBtn from "./GroupBtn";
+} from "../../atom";
+import { db, auth } from "../../firebase";
+import GroupBtn from "../Groupchat/GroupBtn";
 
 const UserList = () => {
   const [User, SetUser] = useState([]);
@@ -93,7 +91,13 @@ const UserList = () => {
   };
   //그룹채팅방생성
   const GroupChathandle = async (GRoomId, displayName) => {
+    console.log(GRoomId);
     const res = await getDoc(doc(db, "GroupChat", GRoomId));
+    //방 존재 안한다고 뜸 에러 수정해야함. 첫번째로 할때만 안되고 두번째로 다시 하니까 또됨.
+    //뭔가 방 만드는 과정에서 꼬이는것 같음
+    //새롭게 방만들고 콘솔 다시 찍어볼것
+    console.log(!res.exists());
+
     // const query = await getDoc(doc(db, "userChats", SelectUser.uid));
     try {
       if (!res.exists()) {

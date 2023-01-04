@@ -1,6 +1,6 @@
-import Menu from "../Components/Menu";
-import Navbar from "../Components/Navbar";
-import GroupMessages from "../Components/GroupMessages";
+import Menu from "../Components/Common/Menu";
+import Navbar from "../Components/Common/Navbar";
+import GroupMessages from "../Components/Groupchat/GroupMessages";
 const GroupMsg = () => {
   return (
     <div className="home">

@@ -7,7 +7,7 @@ import {
   GroupRoomNum,
   GroupUserName,
   Menuclick,
-} from "../atom";
+} from "../../atom";
 
 const GroupBtn = ({ GroupChathandle }) => {
   const [GRoomId, SetGRoomId] = useRecoilState(GroupRoomNum);

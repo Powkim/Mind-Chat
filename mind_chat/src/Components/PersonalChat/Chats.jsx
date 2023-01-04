@@ -4,8 +4,8 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { RoomNum, Select, UserOn } from "../atom";
-import { db, auth } from "../firebase";
+import { RoomNum, Select, UserOn } from "../../atom";
+import { db, auth } from "../../firebase";
 
 const UserList = () => {
   const [User, SetUser] = useState([]);

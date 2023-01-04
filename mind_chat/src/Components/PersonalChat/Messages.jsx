@@ -4,44 +4,32 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { GroupCreate, GroupRoomNum, RoomNum, UserOn } from "../atom";
-import { auth, db } from "../firebase";
-import GroupInput from "./GroupInput";
-import GroupMessage from "./GroupMessage";
+import { RoomNum, UserOn } from "../../atom";
+import { auth, db } from "../../firebase";
+import Input from "./Input";
+import Message from "./Message";
 
-const GroupMessages = () => {
+const Messages = () => {
   const [messages, setMessages] = useState([]);
-  const [RoomId, SetRoomId] = useRecoilState(GroupRoomNum);
+  const [RoomId, SetRoomId] = useRecoilState(RoomNum);
   const [UserClick, SetUserClick] = useRecoilState(UserOn);
-  const [On, SetOn] = useRecoilState(GroupCreate);
   const user = auth.currentUser;
   const navigate = useNavigate();
-  // useEffect(() => {
 
-  //     // const docRef = doc(db, "chats", RoomId);
-  //     // const docSnap = await getDoc(docRef.data().json());
-  //     const res = onSnapshot(doc(db, "GroupChat", RoomId));
-  //     setMessages(res.data().messages);
-  //     console.log(res);
-
-  //   return () => {
-  //     res();
-  //   };
-  // }, [RoomId]);
   useEffect(() => {
     // const docRef = doc(db, "chats", RoomId);
     // const docSnap = await getDoc(docRef.data().json());
-    const res = onSnapshot(doc(db, "GroupChat", RoomId), (doc) => {
-      setMessages(doc.data().messages);
+    const res = onSnapshot(doc(db, "chats", RoomId), (doc) => {
+      doc.exists() && setMessages(doc.data().messages);
     });
     return () => {
       res();
     };
   }, [RoomId]);
-
   console.log(messages);
+  console.log(RoomId);
   const Back = () => {
-    SetOn(false);
+    SetUserClick(false);
     navigate(-1);
   };
 
@@ -56,11 +44,11 @@ const GroupMessages = () => {
   // }, [data.chatId]);
   return (
     <div className="messages">
-      <GroupMessage messages={messages} />
+      <Message message={messages} />
       <button onClick={Back}>뒤로가기</button>
-      <GroupInput />
+      <Input />
     </div>
   );
 };
 
-export default GroupMessages;
+export default Messages;

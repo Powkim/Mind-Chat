@@ -15,7 +15,7 @@ const Chat = () => {
   const [UserData, SetUserData] = useState();
   const getUser = async () => {
     const docSnap = await getDoc(doc(db, "users", Useruid));
- 
+
     SetUserData(docSnap.data().displayName);
   };
   useEffect(() => {
