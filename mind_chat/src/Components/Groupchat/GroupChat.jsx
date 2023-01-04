@@ -1,5 +1,5 @@
 import React from "react";
-import { GroupCreate, GroupRoomNum } from "../../atom";
+import { GroupRoomNum } from "../../atom";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { collection, getDocs } from "firebase/firestore";
@@ -10,11 +10,10 @@ import { useNavigate } from "react-router-dom";
 const GroupChat = () => {
   const [RoomId, SetRoomId] = useRecoilState(GroupRoomNum);
   const [chats, SetChats] = useState([]);
-  const [On, SetOn] = useRecoilState(GroupCreate);
+
   const navigate = useNavigate();
   const currentUser = auth.currentUser;
   const UserSelectHandle = async (roomid) => {
-    SetOn(true);
     SetRoomId(roomid);
     navigate("/group/messages");
   };

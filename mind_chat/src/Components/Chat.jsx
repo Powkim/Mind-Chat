@@ -22,14 +22,6 @@ const Chat = () => {
     getUser();
   }, [Useruid]);
 
-  // const getUser = async () => {
-  //   const query = await getDocs(collection(db, "users"));
-  //   query.forEach((doc) => {
-  //     arr.push(doc.data());
-  //     SetUser(arr.slice(0, 4));
-  //   });
-  // };
-
   return (
     <div className="chat">
       <div className="chatInfo">

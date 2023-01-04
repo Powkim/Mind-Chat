@@ -6,8 +6,6 @@ import { Menuclick } from "../../atom";
 
 const Menu = () => {
   const [TitleId, SetTitleId] = useRecoilState(Menuclick);
-
-  const navigate = useNavigate();
   const menulist = [
     {
       id: 1,

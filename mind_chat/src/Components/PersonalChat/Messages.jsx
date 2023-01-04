@@ -13,7 +13,7 @@ const Messages = () => {
   const [messages, setMessages] = useState([]);
   const [RoomId, SetRoomId] = useRecoilState(RoomNum);
   const [UserClick, SetUserClick] = useRecoilState(UserOn);
-  const user = auth.currentUser;
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,8 +26,7 @@ const Messages = () => {
       res();
     };
   }, [RoomId]);
-  console.log(messages);
-  console.log(RoomId);
+
   const Back = () => {
     SetUserClick(false);
     navigate(-1);

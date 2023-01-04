@@ -1,23 +1,14 @@
 import { React, useState } from "react";
-import {
-  arrayUnion,
-  doc,
-  serverTimestamp,
-  Timestamp,
-  updateDoc,
-  addDoc,
-  setDoc,
-} from "firebase/firestore";
-
+import { arrayUnion, doc, Timestamp, updateDoc } from "firebase/firestore";
 import { db, auth } from "../../firebase";
 import { v4 as uuid } from "uuid";
-import { GroupRoomNum, Select } from "../../atom";
+import { GroupRoomNum } from "../../atom";
 import { useRecoilState } from "recoil";
 
 const GroupInput = () => {
   const [text, SetText] = useState("");
   const [ChatId, SetChatId] = useRecoilState(GroupRoomNum);
-  const [Selectuser, SetSelectuser] = useRecoilState(Select);
+
   const currentUser = auth.currentUser;
 
   const handleSend = async () => {

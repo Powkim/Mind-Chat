@@ -18,8 +18,6 @@ const Navbar = () => {
     };
   }, []);
 
-  const BasePhoto =
-    "https://user-images.githubusercontent.com/107850055/210062348-8d3c5b2d-5cc1-46f8-9302-02832691c9c1.png";
   const Logouthandle = () => {
     signOut(auth);
     navigate("/login");

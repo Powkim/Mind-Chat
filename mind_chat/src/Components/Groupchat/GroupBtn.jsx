@@ -1,37 +1,24 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import {
-  GroupCreate,
-  GroupOn,
-  GroupRoomNum,
-  GroupUserName,
-  Menuclick,
-} from "../../atom";
+import { GroupOn, GroupRoomNum, GroupUserName, Menuclick } from "../../atom";
 
 const GroupBtn = ({ GroupChathandle }) => {
   const [GRoomId, SetGRoomId] = useRecoilState(GroupRoomNum);
   const [UserName, SetUserName] = useRecoilState(GroupUserName);
   //그룹채팅 + 버튼 클릭 여부
   const [BtnOn, SetBtnOn] = useRecoilState(GroupOn);
-  const [On, SetOn] = useRecoilState(GroupCreate);
   const [TitleId, SetTitleId] = useRecoilState(Menuclick);
   const navigate = useNavigate();
   const Btnhandle = () => {
     SetBtnOn(!BtnOn);
-
-    // navigate("/group");
   };
   const Createhandle = (GRoomId, UserName) => {
     GroupChathandle(GRoomId, UserName);
     navigate("/group/messages");
     SetTitleId(3);
-    SetOn(!BtnOn);
   };
-  // SetBtnOn(false);
-  // useEffect(() => {
-  //   SetBtnOn(false);
-  // }, []);
+
   useEffect(() => {
     if (BtnOn) {
       SetBtnOn(false);
