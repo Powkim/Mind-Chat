@@ -31,7 +31,11 @@ const GroupMessages = () => {
   return (
     <div className="messages">
       <GroupMessage messages={messages} />
-      <button onClick={Back}>뒤로가기</button>
+      <img
+        src="https://user-images.githubusercontent.com/107850055/210494097-558f5195-9268-4bc9-a756-dad620fa0585.png"
+        alt=""
+        onClick={Back}
+      ></img>
       <GroupInput />
     </div>
   );

@@ -44,7 +44,7 @@ const Messages = () => {
   return (
     <div className="messages">
       <Message message={messages} />
-      <button onClick={Back}>뒤로가기</button>
+
       <Input />
     </div>
   );
