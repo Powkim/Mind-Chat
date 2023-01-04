@@ -12,7 +12,6 @@ const UserList = () => {
   const [chats, SetChats] = useState([]);
   const [UserClick, SetUserClick] = useRecoilState(UserOn);
   const navigate = useNavigate();
-  const q = getDocs(collection(db, "users"));
   const currentUser = auth.currentUser;
 
   const getUser = async () => {

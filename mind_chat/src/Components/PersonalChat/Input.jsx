@@ -21,9 +21,12 @@ const Input = () => {
         senderId: currentUser.uid,
         date: Timestamp.now(),
         RoomId: ChatId,
+        photoURL: currentUser.photoURL,
+        displayName: currentUser.displayName,
       }),
       lastMsg: text,
     });
+    SetText("");
   };
 
   return (
