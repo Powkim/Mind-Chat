@@ -7,13 +7,21 @@ import { RoomNum, UserOn } from "../../atom";
 import { db, auth } from "../../firebase";
 
 const UserList = () => {
+  const [User, SetUser] = useState([]);
   const [RoomId, SetRoomId] = useRecoilState(RoomNum);
   const [chats, SetChats] = useState([]);
   const [UserClick, SetUserClick] = useRecoilState(UserOn);
   const navigate = useNavigate();
-
   const currentUser = auth.currentUser;
 
+  const getUser = async () => {
+    const query = await getDocs(collection(db, "users"));
+    const arr = [];
+    query.forEach((doc) => {
+      arr.push(doc.data());
+      SetUser(arr);
+    });
+  };
   const getData = async () => {
     const query = await getDocs(collection(db, "chats"));
 
@@ -25,17 +33,20 @@ const UserList = () => {
   };
 
   useEffect(() => {
+    getUser();
     getData();
   }, []);
 
+  //유저 선택시 채팅방 만들기
   const UserSelectHandle = (uid) => {
     SetUserClick();
-    SetRoomId(
-      currentUser.uid > uid ? currentUser.uid + uid : uid + currentUser.uid
-    );
+    const arr = [];
+    arr.push(uid, currentUser.uid);
+    SetRoomId([...arr].sort().join(""));
+
     navigate("/individual/messages");
   };
-  console.log(chats);
+
   return (
     <>
       <div className="chats">
@@ -43,7 +54,7 @@ const UserList = () => {
           <div
             className="userChat"
             onClick={() => {
-              UserSelectHandle(chat.userList.uid);
+              UserSelectHandle(chat.invited.uid);
             }}
           >
             <div className="userChatInfo">

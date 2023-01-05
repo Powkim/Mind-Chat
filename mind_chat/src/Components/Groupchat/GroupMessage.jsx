@@ -16,7 +16,7 @@ const GroupMessage = ({ messages }) => {
   useEffect(() => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
-  console.log(messages);
+
   return (
     <div className="messageWrap">
       <img
