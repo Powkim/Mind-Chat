@@ -7,12 +7,7 @@ import { useState } from "react";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const [User, SetUser] = useState([]);
-
-  useEffect(() => {
-    SetUser(auth.currentUser);
-  }, []);
-  console.log(User);
+  const User = auth.currentUser;
   const Logouthandle = () => {
     signOut(auth);
     navigate("/login");

@@ -33,7 +33,7 @@ const GroupMessage = ({ messages }) => {
             className={`message ${
               items.senderId === currentUser.uid && "owner"
             }`}
-            key={items.id}
+            key={items.senderId}
           >
             <div className="messageInfo">
               <span>{items.displayName}</span>

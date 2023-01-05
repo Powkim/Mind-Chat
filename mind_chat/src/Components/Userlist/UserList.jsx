@@ -55,12 +55,10 @@ const UserList = () => {
           },
           lastMsg: "",
         });
-        navigate("/individual/messages");
-        SetTitleId(2);
-      } else {
-        console.log("안됨");
       }
     } catch {}
+    navigate("/individual/messages");
+    SetTitleId(2);
   };
   //그룹채팅방생성
   const GroupChathandle = async (GRoomId, displayName) => {

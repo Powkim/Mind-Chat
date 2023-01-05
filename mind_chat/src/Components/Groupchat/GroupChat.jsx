@@ -39,7 +39,7 @@ const GroupChat = () => {
   useEffect(() => {
     GroupList();
   }, []);
-  console.log(chats);
+
   return (
     <>
       <div className="chats">
