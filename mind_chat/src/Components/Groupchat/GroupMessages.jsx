@@ -13,7 +13,7 @@ const GroupMessages = () => {
   const [messages, setMessages] = useState([]);
   const [RoomId, SetRoomId] = useRecoilState(GroupRoomNum);
 
-  const navigate = useNavigate();
+
 
   useEffect(() => {
     const res = onSnapshot(doc(db, "GroupChat", RoomId), (doc) => {
@@ -24,18 +24,9 @@ const GroupMessages = () => {
     };
   }, [RoomId]);
 
-  const Back = () => {
-    navigate(-1);
-  };
-
   return (
     <div className="messages">
       <GroupMessage messages={messages} />
-      <img
-        src="https://user-images.githubusercontent.com/107850055/210494097-558f5195-9268-4bc9-a756-dad620fa0585.png"
-        alt=""
-        onClick={Back}
-      ></img>
       <GroupInput />
     </div>
   );

@@ -19,7 +19,6 @@ const Input = () => {
         id: uuid(),
         text,
         senderId: currentUser.uid,
-        date: Timestamp.now(),
         RoomId: ChatId,
         photoURL: currentUser.photoURL,
         displayName: currentUser.displayName,

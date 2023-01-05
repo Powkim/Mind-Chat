@@ -39,7 +39,7 @@ const GroupChat = () => {
   useEffect(() => {
     GroupList();
   }, []);
-
+  console.log(chats);
   return (
     <>
       <div className="chats">
@@ -47,7 +47,7 @@ const GroupChat = () => {
           <div
             className="userChat"
             key={chat[0]}
-            onClick={() => UserSelectHandle(chat.messages[1].RoomId)}
+            onClick={() => UserSelectHandle(chat.RoomId)}
           >
             <div className="userChatInfo">
               <img

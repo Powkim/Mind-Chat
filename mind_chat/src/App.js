@@ -11,23 +11,22 @@ import IndividualMsg from "./Pages/IndividualMsg";
 import GroupMsg from "./Pages/GroupMsg";
 
 function App() {
-  const [User, SetUser] = useState([]);
-  useEffect(() => {
-    SetUser(auth.currentUser);
-  }, []);
+  const User = auth.currentUser;
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/">
+          <Route index element={User ? <Home /> : <Login />} />
+          <Route path="/login" element={<Login />} />
 
-        <Route path="/signup" element={<SignUp />} />
+          <Route path="/signup" element={<SignUp />} />
 
-        <Route path="/individual" element={<Individual />} />
-        <Route path="/individual/messages" element={<IndividualMsg />} />
-        <Route path="/group" element={<Group />} />
-        <Route path="/group/messages" element={<GroupMsg />} />
+          <Route path="/individual" element={<Individual />} />
+          <Route path="/individual/messages" element={<IndividualMsg />} />
+          <Route path="/group" element={<Group />} />
+          <Route path="/group/messages" element={<GroupMsg />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

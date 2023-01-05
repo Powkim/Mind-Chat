@@ -16,13 +16,17 @@ export const GroupOn = atom({
 
 export const GroupRoomNum = atom({
   key: "GroupRoomNum",
-  default: "",
+  default: [],
 });
 export const GroupUserName = atom({
   key: "GroupUserName",
   default: [],
 });
-
+//push 초기화용
+export const Guidlist = atom({
+  key: "Guidlist",
+  default: [],
+});
 export const Menuclick = atom({
   key: "Menuclick",
   default: 1,

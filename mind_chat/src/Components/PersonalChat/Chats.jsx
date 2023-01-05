@@ -24,6 +24,7 @@ const UserList = () => {
   };
   const getData = async () => {
     const query = await getDocs(collection(db, "chats"));
+
     const arr = [];
     query.forEach((doc) => {
       arr.push(doc.data());

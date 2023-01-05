@@ -1,6 +1,6 @@
 import React from "react";
 import { signOut } from "firebase/auth";
-import { auth, db } from "../../firebase";
+import { auth } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -22,11 +22,6 @@ const Navbar = () => {
     signOut(auth);
     navigate("/login");
   };
-
-  // query.forEach((doc) => {
-  //   // doc.data() is never undefined for query doc snapshots
-  //   console.log(doc.data());
-  // });
 
   return (
     <div className="navbar">
