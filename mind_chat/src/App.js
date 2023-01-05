@@ -6,27 +6,28 @@ import "./Style.scss";
 import { auth } from "./firebase";
 import Individual from "./Pages/Individual";
 import Group from "./Pages/Group";
-import { useEffect, useState } from "react";
 import IndividualMsg from "./Pages/IndividualMsg";
 import GroupMsg from "./Pages/GroupMsg";
+import { useRecoilState } from "recoil";
+import { CurrentUser } from "./atom";
 
 function App() {
+  const [On, SetOn] = useRecoilState(CurrentUser);
   const User = auth.currentUser;
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/">
-          <Route index element={User ? <Home /> : <Login />} />
-          <Route path="/login" element={<Login />} />
+        <Route path="/" element={On ? <Home /> : <Login />} />
 
-          <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
 
-          <Route path="/individual" element={<Individual />} />
-          <Route path="/individual/messages" element={<IndividualMsg />} />
-          <Route path="/group" element={<Group />} />
-          <Route path="/group/messages" element={<GroupMsg />} />
-        </Route>
+        <Route path="/signup" element={<SignUp />} />
+
+        <Route path="/individual" element={<Individual />} />
+        <Route path="/individual/messages" element={<IndividualMsg />} />
+        <Route path="/group" element={<Group />} />
+        <Route path="/group/messages" element={<GroupMsg />} />
       </Routes>
     </BrowserRouter>
   );

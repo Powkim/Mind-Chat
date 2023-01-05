@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { arrayUnion, doc, Timestamp, updateDoc } from "firebase/firestore";
+import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { db, auth } from "../../firebase";
 import { v4 as uuid } from "uuid";
 import { RoomNum } from "../../atom";

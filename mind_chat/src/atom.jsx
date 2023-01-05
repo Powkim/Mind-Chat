@@ -2,10 +2,14 @@ import { atom } from "recoil";
 
 export const RoomNum = atom({
   key: "RoomNum",
-  default: "",
+  default: [],
 });
 export const UserOn = atom({
   key: "UserOn",
+  default: false,
+});
+export const CurrentUser = atom({
+  key: "CurrentUser",
   default: false,
 });
 //그룹버튼 ON

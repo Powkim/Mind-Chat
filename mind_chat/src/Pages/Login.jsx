@@ -2,12 +2,17 @@ import React from "react";
 import { auth } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { CurrentUser } from "../atom";
+
 const Login = () => {
   const navigate = useNavigate();
+  const [On, SetOn] = useRecoilState(CurrentUser);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const email = e.target[0].value;
     const password = e.target[1].value;
+    SetOn(!On);
     try {
       await signInWithEmailAndPassword(auth, email, password);
       navigate("/");
@@ -15,6 +20,7 @@ const Login = () => {
       window.alert(err);
     }
   };
+
   return (
     <div className="formContainer">
       <div className="formWrapper">

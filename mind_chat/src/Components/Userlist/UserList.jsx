@@ -8,6 +8,7 @@ import {
   GroupRoomNum,
   GroupUserName,
   Guidlist,
+  Menuclick,
   RoomNum,
   UserOn,
 } from "../../atom";
@@ -23,7 +24,7 @@ const UserList = () => {
   const [Group, SetGroup] = useRecoilState(GroupOn);
   const [GRoomId, SetGRoomId] = useRecoilState(GroupRoomNum);
   const [UserName, SetUserName] = useRecoilState(GroupUserName);
-  //그룹챗 생성 여부 확인용
+  const [TitleId, SetTitleId] = useRecoilState(Menuclick);
   const currentUser = auth.currentUser;
   const navigate = useNavigate();
   const getUser = async () => {
@@ -37,27 +38,33 @@ const UserList = () => {
 
   //유저 선택시 채팅방 만들기
   const UserSelectHandle = async (Selectuser) => {
-    SetRoomId(
-      currentUser.uid > Selectuser.uid
-        ? currentUser.uid + Selectuser.uid
-        : Selectuser.uid + currentUser.uid
-    );
+    const arr = [];
+    arr.push(Selectuser.uid, currentUser.uid);
+    SetRoomId([...arr].sort().join(""));
     SetUserClick(!UserClick);
-    const res = await getDoc(doc(db, "chats", RoomId));
 
-    if (!res.exists()) {
-      await setDoc(doc(db, "chats", RoomId), {
-        messages: [],
-        userList: Selectuser,
-        lastMsg: "",
-      });
-    }
-    navigate("/individual/messages");
+    const res = await getDoc(doc(db, "chats", RoomId));
+    try {
+      if (!res.exists()) {
+        await setDoc(doc(db, "chats", RoomId), {
+          messages: [],
+          invited: Selectuser,
+          makeuser: {
+            displayName: currentUser.displayName,
+            PhotoURL: currentUser.photoURL,
+          },
+          lastMsg: "",
+        });
+        navigate("/individual/messages");
+        SetTitleId(2);
+      } else {
+        console.log("안됨");
+      }
+    } catch {}
   };
   //그룹채팅방생성
   const GroupChathandle = async (GRoomId, displayName) => {
     const res = await getDoc(doc(db, "GroupChat", GRoomId));
-    console.log(GRoomId);
     try {
       if (!res.exists()) {
         await setDoc(doc(db, "GroupChat", GRoomId), {
@@ -77,8 +84,6 @@ const UserList = () => {
     const currentIdx = BtnOn.indexOf(uid);
     const newChecked = [...BtnOn];
     const newName = [...UserName];
-    console.log(newChecked);
-    console.log(currentIdx);
     if (currentIdx === -1) {
       newChecked.push(uid);
       newName.push(displayName);
@@ -86,7 +91,6 @@ const UserList = () => {
       newChecked.splice(currentIdx, 1);
       newName.splice(currentIdx, 1);
     }
-
     SetBtnOn(newChecked);
     SetGRoomId([...newChecked].sort().join(""));
     SetUserName(newName);
@@ -94,9 +98,10 @@ const UserList = () => {
   useEffect(() => {
     getUser();
     SetGRoomId("");
+    SetRoomId("");
     SetBtnOn([]);
+    SetUserClick(false);
   }, []);
-  console.log(BtnOn);
 
   return (
     <>

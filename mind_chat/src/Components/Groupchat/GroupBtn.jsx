@@ -39,7 +39,6 @@ const GroupBtn = ({ GroupChathandle }) => {
       SetBtnOn(false);
     }
   }, []);
-  console.log(GRoomId);
   return (
     <>
       <div className="BtnWrap">

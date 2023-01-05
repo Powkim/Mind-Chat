@@ -20,37 +20,15 @@ const GroupInput = () => {
         date: Timestamp.now(),
         RoomId: ChatId,
         lastMsg: text,
+        displayName: currentUser.displayName,
+        photoURL: currentUser.photoURL,
       }),
       lastMsg: arrayUnion({
         lastMsg: text,
       }),
     });
 
-    // await updateDoc(doc(db, "userChats", currentUser.uid), {
-    //   [ChatId + ".lastMessage"]: {
-    //     text,
-    //   },
-    //   [ChatId + ".userInfo"]: {
-    //     uid: Selectuser.uid,
-    //     displayName: Selectuser.displayName,
-    //     photoURL: Selectuser.photoURL,
-    //   },
-    //   [ChatId + ".date"]: serverTimestamp(),
-    // });
-
-    // await updateDoc(doc(db, "userChats", Selectuser.uid), {
-    //   [ChatId + ".lastMessage"]: {
-    //     text,
-    //   },
-
-    //   [ChatId + ".date"]: serverTimestamp(),
-    // });
-
-    // setDoc(doc(db, "LastChat", ChatId), {
-    //   text,
-    //   ChatId,
-    // });
-    // SetLastMsg({ text, Useruid });
+    SetText("");
   };
 
   return (

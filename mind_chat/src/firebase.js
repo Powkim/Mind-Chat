@@ -21,6 +21,7 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 //회원가입 인증용
 export const auth = getAuth();
+
 //회원가입시 유저명을 적용하려면 firebase에서 storage를 이용해야함
 export const storage = getStorage();
 

@@ -31,7 +31,7 @@ const Messages = () => {
     SetUserClick(false);
     navigate(-1);
   };
-
+  console.log(messages);
   // useEffect(() => {
   //   const unSub = onSnapshot(doc(db, "chats", chatId), (doc) => {
   //     doc.exists() && setMessages(doc.data().messages);

@@ -1,7 +1,7 @@
 import React from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
 
@@ -10,14 +10,9 @@ const Navbar = () => {
   const [User, SetUser] = useState([]);
 
   useEffect(() => {
-    const Namehandler = () => {
-      SetUser(auth.currentUser);
-    };
-    return () => {
-      Namehandler();
-    };
+    SetUser(auth.currentUser);
   }, []);
-
+  console.log(User);
   const Logouthandle = () => {
     signOut(auth);
     navigate("/login");

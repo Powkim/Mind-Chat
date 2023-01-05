@@ -7,21 +7,13 @@ import { RoomNum, UserOn } from "../../atom";
 import { db, auth } from "../../firebase";
 
 const UserList = () => {
-  const [User, SetUser] = useState([]);
   const [RoomId, SetRoomId] = useRecoilState(RoomNum);
   const [chats, SetChats] = useState([]);
   const [UserClick, SetUserClick] = useRecoilState(UserOn);
   const navigate = useNavigate();
+
   const currentUser = auth.currentUser;
 
-  const getUser = async () => {
-    const query = await getDocs(collection(db, "users"));
-    const arr = [];
-    query.forEach((doc) => {
-      arr.push(doc.data());
-      SetUser(arr);
-    });
-  };
   const getData = async () => {
     const query = await getDocs(collection(db, "chats"));
 
@@ -33,11 +25,9 @@ const UserList = () => {
   };
 
   useEffect(() => {
-    getUser();
     getData();
   }, []);
 
-  //유저 선택시 채팅방 만들기
   const UserSelectHandle = (uid) => {
     SetUserClick();
     SetRoomId(
@@ -45,7 +35,7 @@ const UserList = () => {
     );
     navigate("/individual/messages");
   };
-
+  console.log(chats);
   return (
     <>
       <div className="chats">
@@ -57,9 +47,21 @@ const UserList = () => {
             }}
           >
             <div className="userChatInfo">
-              <img src={chat.userList.photoURL} alt="" />
+              <img
+                src={
+                  chat.makeuser.displayName === currentUser.displayName
+                    ? chat.invited.photoURL
+                    : chat.makeuser.PhotoURL
+                }
+                alt=""
+              />
               <div>
-                <span>{chat.userList.displayName}</span>
+                <span>
+                  {" "}
+                  {chat.makeuser.displayName === currentUser.displayName
+                    ? chat.invited.displayName
+                    : chat.makeuser.displayName}
+                </span>
                 <p>{chat.lastMsg}</p>
               </div>
             </div>

@@ -16,7 +16,7 @@ const GroupMessage = ({ messages }) => {
   useEffect(() => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
-
+  console.log(messages);
   return (
     <div className="messageWrap">
       <img
@@ -25,6 +25,7 @@ const GroupMessage = ({ messages }) => {
         alt=""
         onClick={Back}
       ></img>
+
       {messages.map((items) => {
         return (
           <div
@@ -35,12 +36,11 @@ const GroupMessage = ({ messages }) => {
             key={items.id}
           >
             <div className="messageInfo">
-              <img src={BasePhoto} alt="" />
-              <span></span>
+              <span>{items.displayName}</span>
+              <img src={items.photoURL} alt="" />
             </div>
             <div className="messageContent">
               <p>{items.text}</p>
-              <img src="" alt="" />
             </div>
           </div>
         );
